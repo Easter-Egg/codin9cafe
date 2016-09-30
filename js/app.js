@@ -7,7 +7,7 @@ angular.module('codin9cafe',
   // Initialize Firebase
   var config = {
     apiKey: "",
-    authDomain: ",
+    authDomain: "",
     databaseURL: "",
     storageBucket: "",
     messagingSenderId: ""
