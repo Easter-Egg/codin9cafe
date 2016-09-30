@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html style="font-family: 'Noto Sans KR','Roboto';">
+  <head>
+    <meta charset="UTF-8">
+    <title>codin9cafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet" type="text/css">
+    <!-- <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css" > -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css" >
+    <link rel="stylesheet" href="css/styles.css" >
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+    <!-- firebase SDK from CDN -->
+    <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-database.js"></script>
+
+
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+  </head>
+  <body ng-app="codin9cafe">
+  
+    <header layout="row" style="background: #dedede; margin-bottom: 10px;">
+      <div class="container">
+        <h1 style="padding-top: 120px; margin-top: 0px; padding-bottom: 30px;">코딩카페</h1>
+      </div>
+    </header>
+
+    <ui-view></ui-view>
+
+  </body>
+</html>
