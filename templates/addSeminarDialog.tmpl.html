@@ -10,8 +10,9 @@
   </md-toolbar>
 
   <md-dialog-content class="md-dialog-content" layout="column">
-    <md-input-container style="margin-bottom: 0">
-      <md-datepicker ng-model="today" placeholder="MM/DD/YYYY"></md-datepicker>
+    <md-input-container style="margin-bottom: 0" layout="row" layout-align="center center">
+      <label style="text-align: center;">MM/DD/YYYY</label>
+      <md-datepicker ng-model="today"></md-datepicker>
     </md-input-container>
     <md-input-container class="md-block">
       <input class="md-primary" ng-model="seminar.title" placeholder="Title">
