@@ -2,6 +2,7 @@ angular.module('codin9cafe',
   ['ngMaterial',
 		'ui.router', 
 		'codin9cafe.controllers',
+    'codin9cafe.services',
   ])
 .run(function(){
   // Initialize Firebase
