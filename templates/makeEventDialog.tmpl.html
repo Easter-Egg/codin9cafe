@@ -1,0 +1,29 @@
+<md-dialog aria-label="Add Seminar" flex="25">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Make Event</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <i class="material-icons">clear</i>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="md-dialog-content" layout="column">
+    <md-input-container style="margin-bottom: 0" layout="row" layout-align="center center">
+      <label style="text-align: center;">MM/DD/YYYY</label>
+      <md-datepicker ng-model="event.date" ng-init="today"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <input class="md-primary" ng-model="event.num" placeholder="회차">
+    </md-input-container>
+    <md-input-container class="md-block">
+      <input class="md-primary" ng-model="event.location" placeholder="장소">
+    </md-input-container>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <md-button class="md-primary" ng-click="cancel()">Cancel</md-button>
+    <md-button class="md-primary" ng-click="makeEvent(event)">Add it</md-button>
+  </md-dialog-actions>
+</md-dialog>

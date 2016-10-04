@@ -1,7 +1,17 @@
 <section class="container">
+	<div layout="row" layout-align="space-between center">
+			<h3>Event #{{lastEventNum}}</h3>
+				<md-button class="md-fab md-primary" aria-label="Make a event" ng-click="makeEventPrompt($event)">
+					<i style="vertical-align: middle" class="material-icons">add</i>
+		    </md-button>
+		</div>
+</section>
+
+</br>
+<section class="container">
 	<div id="seminars" layout="column" flex-xs flex-gt-xs="50">
 		<div layout="row" layout-align="space-between center">
-			<h3>세미나</h3>
+			<h4>세미나</h4>
 			<md-button class="md-fab md-primary" aria-label="add seminars" ng-click="addSeminarPrompt($event)">
 				<i style="vertical-align: middle" class="material-icons">add</i>
 		    </md-button>
