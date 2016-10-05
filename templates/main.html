@@ -1,47 +1,143 @@
-<section class="container">
-	<div layout="row" layout-align="space-between center">
+<header>
+	<div class="container">
+		<div layout="row" layout-align="space-around center">
 			<h3>Event #{{lastEventNum}}</h3>
-				<md-button class="md-fab md-primary" aria-label="Make a event" ng-click="makeEventPrompt($event)">
+			<md-button class="md-fab md-primary" aria-label="Make a event" ng-click="makeEventPrompt($event)">
+					<i style="vertical-align: middle" class="material-icons">add</i>
+	    </md-button>		
+		</div>
+	</div>
+</header>
+
+<section>
+	<div class="container">
+		<div id="seminars" layout="column" flex-xs flex-gt-xs="50" style="margin-bottom: 30px">
+			<div layout="row" layout-align="start center">
+				<h4>세미나</h4>
+				<md-button class="md-fab md-primary" aria-label="add seminars" ng-click="addSeminarPrompt($event)">
 					<i style="vertical-align: middle" class="material-icons">add</i>
 		    </md-button>
-		</div>
-</section>
+			</div>
 
-</br>
-<section class="container">
-	<div id="seminars" layout="column" flex-xs flex-gt-xs="50">
-		<div layout="row" layout-align="space-between center">
-			<h4>세미나</h4>
-			<md-button class="md-fab md-primary" aria-label="add seminars" ng-click="addSeminarPrompt($event)">
-				<i style="vertical-align: middle" class="material-icons">add</i>
+			<md-card ng-repeat="item in seminars" ng-if="!noMoreSeminars">
+			  <md-card-title>
+			    <md-card-title-text>
+			      <span class="md-headline">{{item.title}}</span>
+			      <span class="md-subhead">{{item.speaker}}</span>
+			    </md-card-title-text>
+			    <md-card-title-media>
+			      <div class="md-media-sm" style="background-color: #999999;"></div>
+			    </md-card-title-media>
+			  </md-card-title>
+			  <md-card-actions layout="row" layout-align="space-around center">
+			    <md-button>
+			    	<i style="vertical-align: middle" class="material-icons">alarm</i>
+			    </md-button>
+			    <md-button>
+			    	<i style="vertical-align: middle" class="material-icons">thumb_up</i>
+			    </md-button>
+			    <md-button ng-click="removeSeminar(item)">
+			    	<i style="vertical-align: middle" class="material-icons">delete</i>
+			    </md-button>
+			  </md-card-actions>
+			  <md-card-content>
+			    <div class="row" layout="column" style="padding-left:30px;">
+			      {{item.content}}
+			    </div>
+			  </md-card-content>
+			</md-card>
+
+			<md-card ng-if="noMoreSeminars">
+			  <md-card-content>
+			  	<p layout="row" layout-align="center center">발표가 없어요 T^T</p>
+			  </md-card-content>
+			</md-card>
+		</div>
+
+		<div id="seminars" layout="column" flex-xs flex-gt-xs="50" style="margin-bottom: 50px">
+			<div layout="row" layout-align="start center">
+				<h4>I know</h4>
+				<md-button class="md-fab md-primary" aria-label="add iKnow" ng-click="addSeminarPrompt($event)">
+					<i style="vertical-align: middle" class="material-icons">add</i>
 		    </md-button>
+			</div>
+
+			<md-card ng-repeat="item in iKnows" ng-if="!noMoreIKnows">
+			  <md-card-title>
+			    <md-card-title-text>
+			      <span class="md-headline">{{item.title}}</span>
+			      <span class="md-subhead">{{item.speaker}}</span>
+			    </md-card-title-text>
+			    <md-card-title-media>
+			      <div class="md-media-sm" style="background-color: #999999;"></div>
+			    </md-card-title-media>
+			  </md-card-title>
+			  <md-card-actions layout="row" layout-align="space-around center">
+			    <md-button>
+			    	<i style="vertical-align: middle" class="material-icons">alarm</i>
+			    </md-button>
+			    <md-button>
+			    	<i style="vertical-align: middle" class="material-icons">thumb_up</i>
+			    </md-button>
+			    <md-button>
+			    	<i style="vertical-align: middle" class="material-icons">delete</i>
+			    </md-button>
+			  </md-card-actions>
+			  <md-card-content>
+			    <div class="row" layout="column" style="padding-left:30px;">
+			      {{item.content}}
+			    </div>
+			  </md-card-content>
+			</md-card>
+
+			<md-card ng-if="noMoreIKnows">
+			  <md-card-content>
+			  	<p layout="row" layout-align="center center">발표가 없어요 T^T</p>
+			  </md-card-content>
+			</md-card>
 		</div>
 
-		<md-card ng-repeat="item in items" ng-if="!noMoreSeminars">
-		  <md-card-title>
-		    <md-card-title-text>
-		      <span class="md-headline">{{item.title}}</span>
-		      <span class="md-subhead">{{item.speaker}}</span>
-		    </md-card-title-text>
-		    <md-card-title-media>
-		      <div class="md-media-sm" style="background-color: #999999;"></div>
-		    </md-card-title-media>
-		  </md-card-title>
-		  <md-card-actions layout="row" layout-align="end center">
-		    <md-button><i style="vertical-align: middle" class="material-icons">alarm</i></md-button>
-		    <md-button><i style="vertical-align: middle" class="material-icons">thumb_up</i></md-button>
-		  </md-card-actions>
-		  <md-card-content>
-		    <div class="row" layout="column" style="padding-left:30px;">
-		      {{item.content}}
-		    </div>
-		  </md-card-content>
-		</md-card>
+		<div id="seminars" layout="column" flex-xs flex-gt-xs="50" style="margin-bottom: 50px">
+			<div layout="row" layout-align="start center">
+				<h4>Book</h4>
+				<md-button class="md-fab md-primary" aria-label="add iKnow" ng-click="addSeminarPrompt($event)">
+					<i style="vertical-align: middle" class="material-icons">add</i>
+		    </md-button>
+			</div>
 
-		<md-card ng-if="noMoreSeminars">
-		  <md-card-content>
-		  	<p layout="row" layout-align="center center">발표가 없어요 T^T</p>
-		  </md-card-content>
-		</md-card>
+			<md-card ng-repeat="item in books" ng-if="!noMoreBooks">
+			  <md-card-title>
+			    <md-card-title-text>
+			      <span class="md-headline">{{item.title}}</span>
+			      <span class="md-subhead">{{item.speaker}}</span>
+			    </md-card-title-text>
+			    <md-card-title-media>
+			      <div class="md-media-sm" style="background-color: #999999;"></div>
+			    </md-card-title-media>
+			  </md-card-title>
+			  <md-card-actions layout="row" layout-align="space-around center">
+			    <md-button>
+			    	<i style="vertical-align: middle" class="material-icons">alarm</i>
+			    </md-button>
+			    <md-button>
+			    	<i style="vertical-align: middle" class="material-icons">thumb_up</i>
+			    </md-button>
+			    <md-button>
+			    	<i style="vertical-align: middle" class="material-icons">delete</i>
+			    </md-button>
+			  </md-card-actions>
+			  <md-card-content>
+			    <div class="row" layout="column" style="padding-left: 50px;">
+			      {{item.content}}
+			    </div>
+			  </md-card-content>
+			</md-card>
+
+			<md-card ng-if="noMoreBooks">
+			  <md-card-content>
+			  	<p layout="row" layout-align="center center">발표가 없어요 T^T</p>
+			  </md-card-content>
+			</md-card>
+		</div>
 	</div>
 </section>

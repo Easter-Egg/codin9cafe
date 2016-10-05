@@ -2,19 +2,19 @@ angular.module('codin9cafe.services', [])
   .factory('TimeTable', function($q){
   	return {
   		init: function(){
-  			var deferrd = $q.defer();
+  			var deferred = $q.defer();
   			var items = [];
-        var lastEventKey = firebase.database().ref('events/').limitToLast(1).key;
-        var seminarsOfLastEvents = firebase.database().ref('events/' + lastEventKey + '/seminars/');
-				var deferred = $q.defer();
-				seminarsOfLastEvents.once('value').then(function(datas){
-					datas.forEach(function(data){
-					  items.splice(0, 0, data.val());
-					});
-					deferred.resolve(items);
-				});
+
+        var eventsRef = firebase.database().ref('events/');
+        eventsRef.limitToLast(1).on('child_added', function(data){
+          deferred.resolve(data.val());
+        });
 
 				return deferred.promise;
-  		}
+  		},
+      getLastEventKey: function(){
+        var deferred = $q.defer();
+        return deferred.promise;
+      }
   	}
   })

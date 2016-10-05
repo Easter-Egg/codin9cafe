@@ -1,41 +1,39 @@
 angular.module('codin9cafe.controllers', [])
 .controller('mainCtrl',  function($scope, $timeout, $http, $mdDialog, TimeTable) {
-  $scope.noMoreSeminars = false;
-  $scope.items = [];
+  $scope.seminars = [];
+  $scope.iKnows = [];
+  $scope.books = [];
   $scope.lastEventNum = 0;
+  $scope.lastEventkey = '';
+  $scope.noMoreSeminars = false;
+  $scope.noMoreIKnows = true;
+  $scope.noMoreBooks = true;
 
-  var eventsRef = firebase.database().ref('events/');
-  eventsRef.on('child_added', function(data){
-    $scope.lastEventNum = data.val().num;
-  });
-
-  // asyncly get a added seminars from firebase database
+  // asyncly init
   TimeTable.init().then(function(data){
-    if(data.length == 0){
+    $scope.lastEventNum = data.num;
+    $scope.lastEventkey = data.key;
+
+    if(typeof data.seminars == "undefined"){
       $scope.noMoreSeminars = true;
-      $scope.status = "등록된 발표가 없습니다.";
     }
-    else
-      $scope.items = data;
-  })
 
-  // add listener
-  var seminarsRef = firebase.database().ref('seminars/');
-  seminarsRef.on('child_added', function(data){
-    if($scope.noMoreSeminars) $scope.noMoreSeminars = !$scope.noMoreSeminars;
-    $scope.items.splice(0, 0, data.val());
-  });
+    var seminarsRef = firebase.database().ref('events/'+ data.key  +'/seminars/');
+    seminarsRef.on('child_added', function(data){
+      if($scope.noMoreSeminars) $scope.noMoreSeminars = !$scope.noMoreSeminars;
+      $scope.seminars.splice(0, 0, data.val());
+    });
 
-  seminarsRef.on('child_removed', function(data){
-    $scope.items.forEach(function(item){
-      if(item.key == data.val().key){
-        $scope.items.pop(0, 0, item);
+    seminarsRef.on('child_removed', function(data){
+      for(var i = 0 ; i < $scope.seminars.length ; i++){
+        if($scope.seminars[i].key == data.val().key){
+          $scope.seminars.splice(i, 1);
+        }
       }
-    })
 
-    if($scope.items.length == 0) $scope.noMoreSeminars = true;
-    $scope.$digest();
-  });
+      if($scope.seminars.length == 0) $scope.noMoreSeminars = true;
+    });
+  })
 
   $scope.addSeminarPrompt = function(ev) {
     $mdDialog.show({
@@ -54,6 +52,12 @@ angular.module('codin9cafe.controllers', [])
 
   function addSeminarDialogController($scope, $mdDialog) {
     var today = new Date();
+
+    var eventsRef = firebase.database().ref('events/');
+    eventsRef.limitToLast(1).on('child_added', function(data){
+      $scope.lastEventkey = data.key;
+    });
+
     $scope.hide = function() {
       $mdDialog.hide();
     };
@@ -63,10 +67,9 @@ angular.module('codin9cafe.controllers', [])
     };
 
     $scope.addSeminar = function(seminar) {
-      var newSeminarKey = firebase.database().ref().child('seminars').push().key;
-      firebase.database().ref('seminars/' + newSeminarKey).set({
+      var newSeminarKey = firebase.database().ref('events/' + $scope.lastEventkey + '/seminars/').push().key;
+      firebase.database().ref('events/' + $scope.lastEventkey + '/seminars/' + newSeminarKey).set({
         key: newSeminarKey,
-        date: today,
         title: seminar.title,
         speaker: seminar.speaker,
         content : seminar.content,
@@ -115,10 +118,12 @@ angular.module('codin9cafe.controllers', [])
     };
 
     $scope.makeEvent = function(event){
+      var y = event.date.getFullYear(), m = event.date.getMonth() + 1, d = event.date.getDate();
+      var date = y + '-' + m + '-' + d;
       var newEventKey = firebase.database().ref().child('events').push().key;
       firebase.database().ref('events/' + newEventKey).set({
         key: newEventKey,
-        date: event.date,
+        date: date,
         num: event.num,
         loc: event.location
       }).then(function(){
@@ -136,5 +141,20 @@ angular.module('codin9cafe.controllers', [])
         );
       });
     };
+  }
+
+  $scope.removeSeminar = function(seminar){
+    var location = 'events/' + $scope.lastEventkey + '/seminars/' + seminar.key;
+    firebase.database().ref(location).remove();
+  }
+
+  $scope.removeIKnow = function(iKnow){
+    var location = 'events/' + $scope.lastEventkey + '/iKnows/' + iKnow.key;
+    firebase.database().ref(location).remove();
+  }
+
+  $scope.removeBook = function(book){
+    var location = 'events/' + $scope.lastEventkey + '/books/' + book.key;
+    firebase.database().ref(location).remove();
   }
 })
